@@ -1,0 +1,10 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local OS files
+.DS_Store
+.directory
+*~
+*.swp

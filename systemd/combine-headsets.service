@@ -1,0 +1,13 @@
+[Unit]
+Description=Combine Headsets Audio Service (Simultaneous Output & Input)
+After=pipewire-pulse.service wireplumber.service
+Requires=pipewire-pulse.service wireplumber.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/after/Scripts/gemini/combine-headsets.sh start
+ExecStop=/home/after/Scripts/gemini/combine-headsets.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

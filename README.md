@@ -63,20 +63,38 @@ Este proyecto te permite seleccionar qué dispositivos de salida (auriculares) y
 
 El script crea y gestiona de manera dinámica varios módulos en PipeWire mediante la utilidad `pactl`:
 
-```mermaid
-graph TD
-    subgraph "Entrada (Micrófonos)"
-        Mic1[Micrófono Físico 1] -->|Loopback| Bus[Bus de Mezcla Oculto]
-        Mic2[Micrófono Físico 2] -->|Loopback| Bus
-        Bus -->|Remap Source| MicVirtual[Micrófono Combinado Virtual]
-        MicVirtual -->|Predeterminado| AppsIn[Aplicaciones: Discord, Skype...]
-    end
+### Entrada (Micrófonos)
 
-    subgraph "Salida (Auriculares)"
-        AppsOut[Aplicaciones: Spotify, Juegos...] -->|Predeterminado| SinkVirtual[Salida Combinada Virtual]
-        SinkVirtual -->|Monitor Loopback| Head1[Auriculares Físicos 1]
-        SinkVirtual -->|Monitor Loopback| Head2[Auriculares Físicos 2]
-    end
+```text
+ [ Micrófono Físico 1 ] ──> (Loopback) ──┐
+                                         ▼
+ [ Micrófono Físico 2 ] ──> (Loopback) ──┼──> [ Bus de Mezcla Oculto ]
+                                         │       (double_headsets_mic_bus)
+ [ Micrófono Físico N ] ──> (Loopback) ──┘           │
+                                                     ▼
+                                              (Remap Source)
+                                                     │
+                                                     ▼
+                                            [ Micrófono Combinado ]
+                                            (Hablar-por-Ambos-Cascos)
+                                                     │
+                                                     ▼
+                                            Aplicaciones: Discord, etc.
+```
+
+### Salida (Auriculares)
+
+```text
+ Reproducción del PC (Spotify, Juegos, etc.)
+               │
+               ▼
+   [ Dispositivo Combinado ]
+  (Escuchar-por-Ambos-Cascos)
+               │
+      ┌────────┴────────┐
+      │ (Loopback)      │ (Loopback)
+      ▼                 ▼
+ [ Auricular 1 ]   [ Auricular 2 ]
 ```
 
 1. **Salida Combinada:** Crea un dispositivo nulo virtual (`double_headsets_playback`) y carga un bucle de retorno (`module-loopback`) hacia cada uno de los auriculares que hayas seleccionado.

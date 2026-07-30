@@ -65,14 +65,14 @@ El script crea y gestiona de manera dinámica varios módulos en PipeWire median
 
 ```mermaid
 graph TD
-    subgraph Entrada (Micrófonos)
+    subgraph "Entrada (Micrófonos)"
         Mic1[Micrófono Físico 1] -->|Loopback| Bus[Bus de Mezcla Oculto]
         Mic2[Micrófono Físico 2] -->|Loopback| Bus
         Bus -->|Remap Source| MicVirtual[Micrófono Combinado Virtual]
         MicVirtual -->|Predeterminado| AppsIn[Aplicaciones: Discord, Skype...]
     end
 
-    subgraph Salida (Auriculares)
+    subgraph "Salida (Auriculares)"
         AppsOut[Aplicaciones: Spotify, Juegos...] -->|Predeterminado| SinkVirtual[Salida Combinada Virtual]
         SinkVirtual -->|Monitor Loopback| Head1[Auriculares Físicos 1]
         SinkVirtual -->|Monitor Loopback| Head2[Auriculares Físicos 2]

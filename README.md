@@ -41,11 +41,11 @@ Este proyecto te permite seleccionar qué dispositivos de salida (auriculares) y
    chmod +x install.sh
    ./install.sh
    ```
-   *Esto copiará los scripts necesarios a `~/Scripts`, creará el wrapper y habilitará el servicio de systemd para tu usuario.*
+   *Esto configurará y habilitará el servicio de systemd para tu usuario apuntando directamente a los scripts en esta carpeta.*
 
 3. **Ejecuta el configurador:**
    ```bash
-   ~/Scripts/seleccionar_audio.sh
+   ./bin/seleccionar_audio.py
    ```
 
 ---

@@ -7,41 +7,41 @@ GREEN="\033[1;32m"
 BLUE="\033[1;34m"
 RESET="\033[0m"
 
-echo -e "${BLUE}Instalando Combined Audio Selector...${RESET}"
+# Obtener la ruta absoluta del repositorio clonado
+INSTALL_DIR=$(cd "$(dirname "$0")" && pwd)
 
-# 1. Crear directorios necesarios
-mkdir -p "$HOME/Scripts/gemini"
+echo -e "${BLUE}Instalando y configurando servicio para Combined Audio Selector...${RESET}"
+echo "Ruta de instalación detectada: $INSTALL_DIR"
+
+# 1. Asegurar permisos de ejecución en la carpeta bin
+chmod +x "$INSTALL_DIR/bin/seleccionar_audio.py"
+chmod +x "$INSTALL_DIR/bin/combine-headsets.sh"
+
+# 2. Crear directorio de systemd de usuario si no existe
 mkdir -p "$HOME/.config/systemd/user"
 
-# 2. Copiar archivos del proyecto
-echo "Copiando archivos..."
-cp bin/seleccionar_audio.py "$HOME/Scripts/seleccionar_audio.py"
-cp bin/combine-headsets.sh "$HOME/Scripts/gemini/combine-headsets.sh"
-cp systemd/combine-headsets.service "$HOME/.config/systemd/user/combine-headsets.service"
+# 3. Crear el archivo del servicio dinámico apuntando a esta carpeta
+echo "Generando servicio systemd..."
+cat << EOF > "$HOME/.config/systemd/user/combine-headsets.service"
+[Unit]
+Description=Combine Headsets Audio Service (Simultaneous Output & Input)
+After=pipewire-pulse.service wireplumber.service
+Requires=pipewire-pulse.service wireplumber.service
 
-# 3. Crear el script de ejecución seleccionar_audio.sh
-cat << 'EOF' > "$HOME/Scripts/seleccionar_audio.sh"
-#!/usr/bin/env bash
-python3 "$HOME/Scripts/seleccionar_audio.py"
+[Service]
+Type=oneshot
+ExecStart=$INSTALL_DIR/bin/combine-headsets.sh start
+ExecStop=$INSTALL_DIR/bin/combine-headsets.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
 EOF
 
-# 4. Enlazar configurar_combinacion.sh
-cat << 'EOF' > "$HOME/Scripts/configurar_combinacion.sh"
-#!/usr/bin/env bash
-python3 "$HOME/Scripts/seleccionar_audio.py"
-EOF
-
-# 5. Hacer ejecutables los archivos
-echo "Ajustando permisos de ejecución..."
-chmod +x "$HOME/Scripts/seleccionar_audio.py"
-chmod +x "$HOME/Scripts/gemini/combine-headsets.sh"
-chmod +x "$HOME/Scripts/seleccionar_audio.sh"
-chmod +x "$HOME/Scripts/configurar_combinacion.sh"
-
-# 6. Recargar y habilitar el servicio de systemd
+# 4. Habilitar servicio en systemd
 echo "Habilitando servicio en systemd (usuario)..."
 systemctl --user daemon-reload
 systemctl --user enable combine-headsets.service
 
 echo -e "${GREEN}✔ ¡Instalación completada con éxito!${RESET}"
-echo -e "Puedes ejecutar el menú con el comando: ${BLUE}~/Scripts/seleccionar_audio.sh${RESET}"
+echo -e "Puedes iniciar el menú directamente desde esta carpeta con: ${BLUE}./bin/seleccionar_audio.py${RESET}"

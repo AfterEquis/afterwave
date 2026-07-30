@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# Script de desinstalación para Combined Audio Selector
+# Script de desinstalación para AfterWave
 set -e
 
 GREEN="\033[1;32m"
 RED="\033[1;31m"
 RESET="\033[0m"
 
-echo -e "${RED}Desinstalando Combined Audio Selector (Deteniendo servicios)...${RESET}"
+echo -e "${RED}Desinstalando AfterWave (Deteniendo servicios)...${RESET}"
 
 # 1. Detener y deshabilitar el servicio
 echo "Deteniendo y deshabilitando servicio de systemd..."

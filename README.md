@@ -1,4 +1,4 @@
-# Combined Audio Selector 🔊🎙️
+# AfterWave 🔊🎙️
 
 Un gestor interactivo y visual para combinar múltiples auriculares y micrófonos físicos en Linux usando **PipeWire** (o PulseAudio) y **systemd**.
 
@@ -32,8 +32,8 @@ Este proyecto te permite seleccionar qué dispositivos de salida (auriculares) y
 
 1. **Clona este repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/combined-audio-selector.git
-   cd combined-audio-selector
+   git clone https://github.com/AfterEquis/afterwave.git
+   cd afterwave
    ```
 
 2. **Ejecuta el script de instalación:**

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Script de instalación para Combined Audio Selector
+# Script de instalación para AfterWave
 set -e
 
 GREEN="\033[1;32m"
@@ -10,7 +10,7 @@ RESET="\033[0m"
 # Obtener la ruta absoluta del repositorio clonado
 INSTALL_DIR=$(cd "$(dirname "$0")" && pwd)
 
-echo -e "${BLUE}Instalando y configurando servicio para Combined Audio Selector...${RESET}"
+echo -e "${BLUE}Instalando y configurando servicio para AfterWave...${RESET}"
 echo "Ruta de instalación detectada: $INSTALL_DIR"
 
 # 1. Asegurar permisos de ejecución en la carpeta bin
@@ -24,7 +24,7 @@ mkdir -p "$HOME/.config/systemd/user"
 echo "Generando servicio systemd..."
 cat << EOF > "$HOME/.config/systemd/user/combine-headsets.service"
 [Unit]
-Description=Combine Headsets Audio Service (Simultaneous Output & Input)
+Description=AfterWave Audio Service (Simultaneous Output & Input)
 After=pipewire-pulse.service wireplumber.service
 Requires=pipewire-pulse.service wireplumber.service
 

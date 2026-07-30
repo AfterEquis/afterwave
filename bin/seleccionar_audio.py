@@ -149,7 +149,7 @@ def render(items, current_idx, selected_sinks, selected_sources, step, eq_frame)
     
     # end="\033[K\n" limpia la línea de residuos anteriores sin parpadear
     print(f"  {b_color}┌────────────────────────────────────────┐{RESET}", end="\033[K\n")
-    print(f"  {b_color}│ {RESET}{CYAN}{eq_left}{RESET}   {BOLD}Combinación de Auriculares{RESET}   {CYAN}{eq_right}{RESET} {b_color}│{RESET}", end="\033[K\n")
+    print(f"  {b_color}│ {RESET}{CYAN}{eq_left}{RESET}           {BOLD}AfterWave{RESET}            {CYAN}{eq_right}{RESET} {b_color}│{RESET}", end="\033[K\n")
     print(f"  {b_color}└────────────────────────────────────────┘{RESET}", end="\033[K\n")
     print("", end="\033[K\n")
 
